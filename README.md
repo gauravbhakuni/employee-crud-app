@@ -1,8 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Employee CRUD App
 
-## Getting Started
+A full-stack Employee Management application built with **Next.js (App Router)** and **SQLite**.  
+It supports full CRUD operations (Create, Read, Update, Delete), employee filtering, and a responsive UI with light/dark theme powered by Tailwind CSS.
 
-First, run the development server:
+---
+
+## 🚀 Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +31,77 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the app by modifying files under `src/app/` (for example `src/app/employees/page.tsx`). The page auto-updates as you edit.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧪 Run Tests (backend)
 
-To learn more about Next.js, take a look at the following resources:
+If you're using the test DB setup from the project, run tests like this:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# run Jest with test env (uses separate test DB if configured)
+NODE_ENV=test npx jest
+# or if you add a package.json script:
+npm test
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠 Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 📋 Manage employees with full CRUD functionality  
+- 🔎 Search & filter employees (client-side)  
+- 🌗 Dark and light theme support (CSS variables + prefers-color-scheme)  
+- ⚡ Local persistence with SQLite (`better-sqlite3`)  
+- ✅ Backend tests using Jest
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🧭 Project Structure (high level)
+
+```text
+src/
+├─ app/
+│  ├─ api/
+│  │  ├─ employees/route.ts        # GET, POST
+│  │  └─ employees/[id]/route.ts   # GET, PUT, DELETE
+│  ├─ employees/page.tsx           # Frontend list + form UI
+│  └─ layout.tsx
+├─ lib/
+│  ├─ employeeDb.ts                # DB helpers (imported by API & tests)
+│  └─ types.ts
+tests/
+├─ employee.test.ts                # Jest tests for CRUD
+db.sqlite                          # production DB (do not commit)
+src/lib/db.test.sqlite             # test DB (ignored)
+```
+
+---
+
+## ⚙️ Notes & Recommendations
+
+- **Do not commit** `db.sqlite` to the repository. Add it to `.gitignore`.  
+- The test runner uses `NODE_ENV=test` to switch to a separate test DB (`src/lib/db.test.sqlite`) if you configured `employeeDb.ts` that way.  
+- For styling, semantic tokens like `--color-card`, `--color-primary`, etc. are defined in `globals.css` — adjust there to change theme colors.  
+- To force dark mode by default via CSS only, set dark variables in `:root` and provide light overrides inside `@media (prefers-color-scheme: light)` (see `globals.css` in the project).
+
+---
+
+## 📚 Learn More
+
+- [Next.js Documentation](https://nextjs.org/docs)  
+- [Tailwind CSS](https://tailwindcss.com/docs)  
+- [better-sqlite3](https://github.com/WiseLibs/better-sqlite3)  
+- [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest) for testing APIs
+
+---
+
+## 🚢 Deployment
+
+The easiest way to deploy this app is with [Vercel](https://vercel.com).  
+Check out the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+---
